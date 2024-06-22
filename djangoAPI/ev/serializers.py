@@ -4,7 +4,7 @@ from .models import EVCategory, EVItem, EVStore, EVSuperCategory
 class EVItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = EVItem
-        fields = ['name', 'description', 'price']
+        fields = ['cutoff', 'thumbnail', 'title', 'desc', 'old_price', 'new_price', 'banner', 'display_photo', 'menu', 'star']
 
 
 class EVCategorySerializer(serializers.ModelSerializer):
@@ -12,7 +12,7 @@ class EVCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EVCategory
-        fields = ['id', 'name', 'description', 'items']
+        fields = ['name', 'icon', 'items']
 
     def create(self, validated_data):
         items = validated_data.pop('items')
@@ -28,7 +28,7 @@ class EVStoreSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EVStore
-        fields = ['thumbnail', 'name', 'category']
+        fields = ['cutoff', 'thumbnail', 'name', 'desc', 'delivery_time', 'delivery_fee', 'category', 'banner', 'logo', 'rating']
 
     def create(self, validated_data):
         category = validated_data.pop('category')
