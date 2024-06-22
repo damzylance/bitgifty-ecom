@@ -10,11 +10,30 @@ class EVCategory(models.Model):
     description = models.TextField()
     items = models.ManyToManyField(EVItem, related_name='items')  # ManyToMany for Scenario 2
 
-class EVProduct(models.Model):
-    desc = models.TextField()
+class EVStore(models.Model):
+    # cutoff = models.CharField(max_length=255)
+    # desc = models.TextField()
+    # rating = models.CharField(max_length=10)
     thumbnail = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
-    icon = models.CharField(max_length=255)
+    # banner = models.CharField(max_length=255)
+    # logo = models.CharField(max_length=255)
+    # delivery_time = models.CharField(max_length=50)
+    # delivery_fee = models.CharField(max_length=50)
+    category = models.ManyToManyField(EVCategory, related_name='stores')
 
     def __str__(self):
         return self.name
+    
+class EVSuperCategory(models.Model):
+    name = models.CharField(max_length=255)
+    icon = models.CharField(max_length=255)
+    store = models.ManyToManyField(EVStore, related_name='store')
+
+    def __str__(self):
+        return self.name
+    
+
+# class EVProductSuperCategory(models.Model):
+#     EVSuperCategoryKey = models.ForeignKey(EVSuperCategory, on_delete=models.CASCADE)
+#     EVProductKey = models.ForeignKey(EVProduct, on_delete=models.CASCADE)

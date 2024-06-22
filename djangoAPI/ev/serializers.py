@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import EVCategory, EVItem
+from .models import EVCategory, EVItem, EVStore, EVSuperCategory
 
 class EVItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,11 +23,21 @@ class EVCategorySerializer(serializers.ModelSerializer):
         return category
 
 
-# class EVCategorySerializer(serializers.ModelSerializer):
-#     # items = EVItemSerializers(many=True, read_only=True)
+class EVStoreSerializer(serializers.ModelSerializer):
+    category = EVCategorySerializer(many=True)
 
-#     items = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    class Meta:
+        model = EVStore
+        fields = ['thumbnail', 'name', 'category']
 
-#     class Meta:
-#         model = EVCategory
-#         fields = ['name', 'description', 'items']
+    def create(self, validated_data):
+        category = validated_data.pop('category')
+        store = EVStore.objects.create(**validated_data)
+        for c in category:
+            items = c.pop('items')
+            category = EVCategory.objects.create(**c)
+            for item in items:
+                EVItem.objects.create(**item)
+
+        return store
+
