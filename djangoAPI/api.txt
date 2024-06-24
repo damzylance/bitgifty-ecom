@@ -1,6 +1,6 @@
 get store                                           {good}
 get store/ Id                                       {good}
-get store/ user
+get store/ user                                     {good}
 post store -d [category[items]]                     {good}
 put store/ Id 
 
@@ -17,8 +17,8 @@ post fulfil-order -d [store-owner, id]
 
 get items                                           {good}
 get items/ Id                                       {good}
-get items/ location
-get items/ category
+get items/ location                                 {good}
+get items/ category                                 {good}
 get items/ category/ location
 get items/ supercategory
 post items                                          {good}

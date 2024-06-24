@@ -1,24 +1,18 @@
 from django.urls import path
-from .views import EVCategoryViewSet, EVItemViewSet, EVStoreViewSet
-
-# urlpatterns = [
-#     path('evcategories/', EVCategoryViewSet.as_view({'get': 'list', 'post': 'create'})),
-#     path('evitems/', EVItemViewSet.as_view({'get': 'list', 'post': 'create'})),
-# ]
-
-
-
+from .views import EVCategoryViewSet, EVItemByStoreViewSet, EVItemByCategoryViewSet, EVStoreByNameViewSet, EVItemViewSet, EVStoreViewSet, EVItemByNameViewSet, EVCategoryByNameViewSet
 from django.urls import path, include
-from .views import EVCategoryViewSet, EVItemViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'evitems', EVItemViewSet)
+router.register(r'evitemByName', EVItemByNameViewSet)
+router.register(r'evitemByCategory', EVItemByCategoryViewSet)
+router.register(r'evitemByStore', EVItemByStoreViewSet)
 router.register(r'evcategories', EVCategoryViewSet)
+router.register(r'evcategoryByName', EVCategoryByNameViewSet)
 router.register(r'evstore', EVStoreViewSet)
+router.register(r'evstoreByName', EVStoreByNameViewSet)
 
-# router.register(r'products', ProductViewSet)
-# router.register(r'stores', StoreViewSet)
 # router.register(r'supercategory', SuperCategoryViewSet)
 
 urlpatterns = [

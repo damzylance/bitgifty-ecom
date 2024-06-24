@@ -19,6 +19,7 @@ class EVCategory(models.Model):
     name = models.CharField(max_length=255)
     icon = models.CharField(max_length=255)
     items = models.ManyToManyField(EVItem, related_name='categories')
+    # items = models.ForeignKey(EVItem, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name
@@ -34,6 +35,8 @@ class EVStore(models.Model):
     delivery_time = models.CharField(max_length=50)
     delivery_fee = models.CharField(max_length=50)
     category = models.ManyToManyField(EVCategory, related_name='stores')
+    # category = models.ForeignKey(EVCategory, null=True, blank=True, on_delete=models.SET_NULL)
+    
 
     def __str__(self):
         return self.name
@@ -42,6 +45,7 @@ class EVSuperCategory(models.Model):
     name = models.CharField(max_length=255)
     icon = models.CharField(max_length=255)
     store = models.ManyToManyField(EVStore, related_name='store')
+    # store = models.ForeignKey(EVStore, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name
