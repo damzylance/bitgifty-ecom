@@ -1,13 +1,17 @@
+"use client";
+
 import { CartIcon, ForwardIcon, NoPersonIcon } from "@/components/Icons";
 import { ItemCard } from "@/components/ItemCard";
 import Search from "@/components/Search";
 import Select from "@/components/Select";
 import { StoreCard } from "@/components/StoreCard";
-import { ItemData, StoreData } from "@/components/Utils/Dummy";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
 import YMLStores from "@/components/YMLStores";
+import { useQuery } from "@tanstack/react-query";
+import { STORES_KEY, SUPER_CATEGORIES_KEY } from "@/components/Utils/Constants";
+import { getAllStores, getAllSuperCategories } from "@/components/Services/Api";
 
 export default function Home() {
   const [userAddress, setUserAddress] = useState("");
@@ -15,6 +19,20 @@ export default function Home() {
   const [showYMLStores, setShowYMLStores] = useState(false);
   const { address, isConnected } = useAccount();
   const router = useRouter();
+
+  const getAllStoresQuery = useQuery({
+    queryKey: [STORES_KEY],
+    queryFn: getAllStores,
+  });
+
+  const getAllSupercategoriesQuery = useQuery({
+    queryKey: [SUPER_CATEGORIES_KEY],
+    queryFn: getAllSuperCategories,
+  });
+
+  const supercategories = getAllSupercategoriesQuery?.data?.results;
+
+  const stores = getAllStoresQuery?.data?.results;
 
   useEffect(() => {
     if (showYMLStores) {
@@ -41,7 +59,6 @@ export default function Home() {
   if (!isMounted) {
     return null;
   }
-  console.log(userAddress);
 
   return (
     <section className="max-w-full md:max-w-[393px] m-[0_auto] relative">
@@ -49,16 +66,16 @@ export default function Home() {
         <div className="flex items-center justify-between">
           <NoPersonIcon onClick={() => {}} extraClass="bg-grey-2" />
           <Search extraClass="bg-blue-2" onChange={(e) => {}} />
-          <CartIcon onClick={() => {}} extraClass="bg-grey-2" />
+          <CartIcon extraClass="bg-grey-2" />
         </div>
         <Select />
         <div className=" grid grid-cols-2 m-[0_auto] mt-[91px] w-fit gap-[28px]">
-          {ItemData?.map((item) => (
+          {supercategories?.map((item: any) => (
             <ItemCard
-              key={item?.text}
-              img={item?.img}
-              text={item?.text}
-              link={item?.link}
+              key={item?.id}
+              img={item?.icon}
+              text={item?.name}
+              link={`${item?.name?.toLowerCase()}`}
             />
           ))}
         </div>
@@ -80,7 +97,7 @@ export default function Home() {
             showYMLStores ? "translate-y-[-300px]" : "transform-none"
           }`}
         >
-          {StoreData?.slice(0, 2)?.map((store) => (
+          {stores?.slice(0, 2)?.map((store: any) => (
             <StoreCard
               key={store?.id}
               cutoff={store?.cutoff}
@@ -88,7 +105,7 @@ export default function Home() {
               desc={store?.desc}
               rating={store?.rating}
               thumbnail={store?.thumbnail}
-              onClick={() => router.push(`/yml-stores/${store?.id}`)}
+              onClick={() => router.push(`/stores/in/${store?.id}`)}
             />
           ))}
         </div>

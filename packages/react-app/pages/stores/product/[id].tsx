@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+"use client";
+
 import {
   BackIcon,
   CartIcon,
@@ -7,28 +8,39 @@ import {
   StarIcon,
 } from "../../../components/Icons";
 import { useRouter } from "next/router";
-import { DrinksData } from "../../../components/Utils/Dummy";
 import { ActionButton } from "../../../components/ActionButton";
+import { useQuery } from "@tanstack/react-query";
+import { ITEM_BY_ID_KEY } from "@/components/Utils/Constants";
+import { getItemById } from "@/components/Services/Api";
+import { useState } from "react";
+import { ItemProp } from "@/components/Utils/Types";
+import { useStateContext } from "@/components/Utils/Context";
 
 const Page = () => {
   const router = useRouter();
-  const { params } = router.query;
-  const [item, setItem] = useState<any>({});
+  const { id } = router.query;
+  const [itemCount, setItemCount] = useState<number>(0);
+  const { dispatch } = useStateContext();
 
-  useEffect(() => {
-    if (params) {
-      const storeInfo = DrinksData?.stores?.find(
-        (store) => store?.id?.toString() === params[0]
-      );
-      const itemCategory = storeInfo?.product?.find(
-        (store) => store?.id?.toString() === params[1]
-      );
-      const item = itemCategory?.item?.find(
-        (store) => store?.id?.toString() === params[2]
-      );
-      setItem(item);
+  const getItemByIdQuery = useQuery({
+    queryKey: [`${ITEM_BY_ID_KEY}_${id}`],
+    queryFn: () => getItemById(id),
+  });
+
+  const item = getItemByIdQuery?.data;
+
+  const handleAddItem = ({
+    quantity,
+    item,
+  }: {
+    quantity: number;
+    item: ItemProp;
+  }) => {
+    if (quantity < 2) {
+      return;
     }
-  }, [params]);
+    dispatch({ type: "ADD_TO_CART", payload: { quantity, item } });
+  };
 
   return (
     <section className="max-w-full md:max-w-[393px] m-[0_auto] relative">
@@ -42,7 +54,7 @@ const Page = () => {
               onClick={() => router.back()}
               extraClass="w-[40px] h-[40px] bg-blue-2 "
             />
-            <CartIcon onClick={() => {}} extraClass="bg-blue-2" />
+            <CartIcon extraClass="bg-blue-2" />
           </div>
           <img
             src={item?.display_photo}
@@ -62,9 +74,13 @@ const Page = () => {
           </div>
           <section className="mt-[37px] flex items-center justify-between">
             <div className="flex items-center gap-x-[25px]">
-              <MinusIcon onClick={() => {}} />
-              <span>1</span>
-              <PlusIcon onClick={() => {}} />
+              <MinusIcon
+                onClick={() =>
+                  setItemCount((prev) => (prev > 1 ? prev - 1 : 0))
+                }
+              />
+              <span>{itemCount}</span>
+              <PlusIcon onClick={() => setItemCount((prev) => prev + 1)} />
             </div>
             <div className="flex flex-col gap-y-[2px]">
               <p className="text-[1.5rem] text-blue-1 leading-[28.13px] font-[900]">
@@ -84,8 +100,12 @@ const Page = () => {
             </p>
           </section>
           <ActionButton
-            text={`Add 1 for ${item?.new_price}`}
-            onClick={() => {}}
+            text={`Add ${itemCount} for ${
+              parseFloat(item?.new_price) * itemCount
+            }`}
+            onClick={() => {
+              handleAddItem({ quantity: itemCount, item });
+            }}
             extraClass="mt-[65px]"
           />
         </section>

@@ -1,4 +1,4 @@
-import { Roboto } from "next/font/google";
+import { Inter, Roboto, Work_Sans } from "next/font/google";
 import {
   RainbowKitProvider,
   connectorsForWallets,
@@ -7,11 +7,11 @@ import { injectedWallet } from "@rainbow-me/rainbowkit/wallets";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
 import { http, WagmiProvider, createConfig } from "wagmi";
-import Layout from "../components/Layout";
 import "../styles/globals.css";
 import { celo, celoAlfajores } from "wagmi/chains";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { StateProvider } from "@/components/Utils/Context";
 
 const connectors = connectorsForWallets(
   [
@@ -40,6 +40,19 @@ const queryClient = new QueryClient();
 const roboto = Roboto({
   weight: ["100", "300", "400", "500", "700", "900"],
   subsets: ["latin"],
+  variable: "--font-roboto",
+});
+
+const inter = Inter({
+  weight: ["700"],
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const work_sans = Work_Sans({
+  weight: ["700"],
+  subsets: ["latin"],
+  variable: "--font-work_sans",
 });
 
 function App({ Component, pageProps }: AppProps) {
@@ -47,7 +60,12 @@ function App({ Component, pageProps }: AppProps) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
-          <Component {...pageProps} className={roboto.className} />
+          <StateProvider>
+            <Component
+              {...pageProps}
+              className={`${roboto.variable} ${inter.variable} ${work_sans.variable}`}
+            />
+          </StateProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

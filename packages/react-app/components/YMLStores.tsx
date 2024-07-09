@@ -1,9 +1,11 @@
 import { BackIcon, CartIcon } from "@/components/Icons";
 import Search from "@/components/Search";
 import { StoreCard } from "@/components/StoreCard";
-import { StoreData } from "@/components/Utils/Dummy";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction } from "react";
+import { STORES_KEY } from "./Utils/Constants";
+import { getAllStores } from "./Services/Api";
 
 const YMLStores = ({
   show,
@@ -13,11 +15,19 @@ const YMLStores = ({
   setShow: Dispatch<SetStateAction<boolean>>;
 }) => {
   const router = useRouter();
+  const getAllStoresQuery = useQuery({
+    queryKey: [STORES_KEY],
+    queryFn: getAllStores,
+  });
+
+  const stores = getAllStoresQuery?.data?.results;
 
   return (
     <section
       className={`w-full bg-white absolute left-0 top-0 transition-all duration-100 ease-in-out ${
-        show ? "top-0 max-h-[852px]" : "top-[852px] max-h-0 overflow-hidden "
+        show
+          ? "top-0 max-h-[852px] min-h-screen"
+          : "top-[852px] max-h-0 overflow-hidden "
       }`}
     >
       <section className=" w-full h-[104px]  pt-[56px] px-[17px]">
@@ -29,12 +39,12 @@ const YMLStores = ({
             extraClass="bg-grey-1 h-[40px] w-[40px]"
           />
           <Search extraClass="bg-grey-1" onChange={(e) => {}} />
-          <CartIcon onClick={() => {}} extraClass="bg-grey-1" />
+          <CartIcon extraClass="bg-grey-1" />
         </div>
       </section>
       <section className="px-[17px]">
         <div className="w-full mt-[23px] grid grid-cols-2 gap-[16px] pb-[56px]">
-          {StoreData?.map((store) => (
+          {stores?.map((store: any) => (
             <StoreCard
               key={store?.id}
               cutoff={store?.cutoff}
@@ -42,7 +52,7 @@ const YMLStores = ({
               desc={store?.desc}
               rating={store?.rating}
               thumbnail={store?.thumbnail}
-              onClick={() => router.push(`/yml-stores/${store?.id}`)}
+              onClick={() => router.push(`/stores/in/${store?.id}`)}
             />
           ))}
         </div>
