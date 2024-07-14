@@ -2,6 +2,8 @@ import { CatCard } from "@/components/CatCard";
 import { BackIcon, CartIcon, FilterIcon } from "@/components/Icons";
 import Search from "@/components/Search";
 import { getSuperCategoryByName } from "@/components/Services/Api";
+import { CatCardSkeleton } from "@/components/Skeletons/CatCardSkeleton";
+import { StoreCardSkeleton } from "@/components/Skeletons/StoreCardSkeleton";
 import { StoreCard } from "@/components/StoreCard";
 import { SUPER_CATEGORY_BY_NAME_KEY } from "@/components/Utils/Constants";
 import { useQuery } from "@tanstack/react-query";
@@ -39,27 +41,35 @@ const Page = () => {
         </div>
 
         <section className="py-[24px] flex items-center gap-x-[16px] w-[361px] overflow-x-auto no-scrollbar">
-          {categories?.map((category: any) => (
-            <CatCard
-              key={category?.id}
-              name={category?.name}
-              icon={category?.icon}
-              onClick={() => {}}
-            />
-          ))}
+          {categories?.map((category: any) =>
+            getCategoryByNameQuery.isFetching ? (
+              <CatCardSkeleton key={category?.id} />
+            ) : (
+              <CatCard
+                key={category?.id}
+                name={category?.name}
+                icon={category?.icon}
+                onClick={() => {}}
+              />
+            )
+          )}
         </section>
         <section className="w-full mt-[38px] grid grid-cols-1 gap-y-[21px] pb-[56px]">
-          {store?.map((store: any) => (
-            <StoreCard
-              key={store?.id}
-              cutoff={`${store?.cutoff} off some items`}
-              item={store?.item}
-              desc={store?.desc}
-              rating={store?.rating}
-              thumbnail={store?.thumbnail}
-              onClick={() => router.push(`/stores/in/${store?.id}`)}
-            />
-          ))}
+          {store?.map((store: any) =>
+            getCategoryByNameQuery.isFetching ? (
+              <StoreCardSkeleton key={store?.id} />
+            ) : (
+              <StoreCard
+                key={store?.id}
+                cutoff={`${store?.cutoff} off some items`}
+                item={store?.item}
+                desc={store?.desc}
+                rating={store?.rating}
+                thumbnail={store?.thumbnail}
+                onClick={() => router.push(`/stores/in/${store?.id}`)}
+              />
+            )
+          )}
         </section>
       </section>
     </section>

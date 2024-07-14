@@ -7,15 +7,37 @@ import {
   DummyMap,
   GiftIcon,
   LocationSmallIcon,
-  MethodIcon,
+  // MethodIcon,
 } from "@/components/Icons";
 import { OptionsCard } from "@/components/OptionsCard";
 import { useStateContext } from "@/components/Utils/Context";
+import { sumTotal } from "@/components/Utils/Helpers";
+import { injected } from "@wagmi/connectors";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useAccount, useConnect } from "wagmi";
 
 const Page = () => {
   const router = useRouter();
   const { state, dispatch } = useStateContext();
+  const [userAddress, setUserAddress] = useState("");
+  const { address, isConnected } = useAccount();
+  const { connect } = useConnect();
+  const productPrice = sumTotal(state.cart);
+  const servicesPrice = 100;
+  const totalPrice = productPrice + servicesPrice;
+
+  const handleCheckOut = () => {
+    connect({ connector: injected() });
+    // dispatch({ type: "CLEAR_CART" });
+  };
+
+  useEffect(() => {
+    if (isConnected && address) {
+      setUserAddress(address);
+    }
+  }, [address, isConnected]);
+
   return (
     <section className="max-w-full md:max-w-[393px] m-[0_auto] relative pb-[100px]">
       <div className="flex items-center justify-center pt-[39px] px-[17px] pb-[16px] shadow-sm">
@@ -28,7 +50,7 @@ const Page = () => {
         <p className="text-[1rem] text-black-1 font-[500] h-[40px]">Checkout</p>
       </div>
       {state?.cart?.length === 0 ? (
-        <p className="text-[0.75rem] text-black-2 text-center leading-[14.06px]">
+        <p className="mt-[10px] text-[0.75rem] text-black-2 text-center leading-[14.06px]">
           There's nothing in the cart at the moment
         </p>
       ) : (
@@ -48,9 +70,12 @@ const Page = () => {
                 title={product?.item?.title}
                 desc={product?.item?.desc}
                 thumbnail={product?.item?.thumbnail}
-                new_price={(
-                  parseFloat(product?.item?.new_price) * product?.quantity
-                )?.toString()}
+                new_price={
+                  "₦" +
+                  (
+                    parseFloat(product?.item?.new_price) * product?.quantity
+                  )?.toString()
+                }
                 itemCount={product?.quantity}
                 addClick={() => {
                   dispatch({
@@ -94,7 +119,7 @@ const Page = () => {
                 As soon as possible
               </p>
             </div>
-            <div className="mt-[59px] px-[16px] flex flex-col gap-y-[25px]">
+            {/* <div className="mt-[59px] px-[16px] flex flex-col gap-y-[25px]">
               <h2 className="text-[1.125rem] text-black font-[500] leading-[21.09px] ">
                 Payment Method
               </h2>
@@ -104,7 +129,7 @@ const Page = () => {
                 subText="Lorem ipsum is a dummy text"
                 onClick={() => {}}
               />
-            </div>
+            </div> */}
           </div>
           <div className="mt-[54px] p-[18px_24px] flex flex-col gap-y-[25px] bg-grey-4 rounded-[16px]">
             <h2 className="text-[1.125rem] text-black font-[500] leading-[21.09px] ">
@@ -116,7 +141,7 @@ const Page = () => {
                   Products
                 </span>
                 <span className="text-[0.875rem] text-black-2 leading-[16.41px]">
-                  $1,000
+                  ₦{productPrice}
                 </span>
               </div>
               <div className="flex items-center justify-between">
@@ -132,7 +157,7 @@ const Page = () => {
                   Services
                 </span>
                 <span className="text-[0.875rem] text-black-2 leading-[16.41px]">
-                  $100
+                  ₦100
                 </span>
               </div>
               <div className="flex items-center justify-between">
@@ -140,15 +165,16 @@ const Page = () => {
                   Total
                 </span>
                 <span className="text-[1rem] text-black-2 leading-[18.75px] font-[600]">
-                  $1,100
+                  {`₦${totalPrice}`}
                 </span>
               </div>
             </section>
             <ActionButton
               text="Confirm Order"
-              onClick={() => {}}
+              onClick={handleCheckOut}
               extraClass="mt-[43px]"
             />
+            {userAddress && <span>Wallet Address: {userAddress}</span>}
           </div>
         </>
       )}

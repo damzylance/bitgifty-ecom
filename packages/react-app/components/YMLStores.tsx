@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { Dispatch, SetStateAction } from "react";
 import { STORES_KEY } from "./Utils/Constants";
 import { getAllStores } from "./Services/Api";
+import { StoreCardSkeleton } from "./Skeletons/StoreCardSkeleton";
 
 const YMLStores = ({
   show,
@@ -44,17 +45,21 @@ const YMLStores = ({
       </section>
       <section className="px-[17px]">
         <div className="w-full mt-[23px] grid grid-cols-2 gap-[16px] pb-[56px]">
-          {stores?.map((store: any) => (
-            <StoreCard
-              key={store?.id}
-              cutoff={store?.cutoff}
-              item={store?.item}
-              desc={store?.desc}
-              rating={store?.rating}
-              thumbnail={store?.thumbnail}
-              onClick={() => router.push(`/stores/in/${store?.id}`)}
-            />
-          ))}
+          {stores?.map((store: any) =>
+            getAllStoresQuery.isFetching ? (
+              <StoreCardSkeleton key={store?.id} />
+            ) : (
+              <StoreCard
+                key={store?.id}
+                cutoff={store?.cutoff}
+                item={store?.item}
+                desc={store?.desc}
+                rating={store?.rating}
+                thumbnail={store?.thumbnail}
+                onClick={() => router.push(`/stores/in/${store?.id}`)}
+              />
+            )
+          )}
         </div>
       </section>
     </section>

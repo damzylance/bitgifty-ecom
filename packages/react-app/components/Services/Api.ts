@@ -104,7 +104,7 @@ export const getAllSuperCategories = async () => {
 };
 
 // Get supercategories by name
-export const getSuperCategoryByName = async (category_name: string) => {
+export const getSuperCategoryByName = async (category_name:  string | string[] | undefined) => {
   return await request({
     url: getSuperCategoryByNameUrl(category_name),
     action: "get",

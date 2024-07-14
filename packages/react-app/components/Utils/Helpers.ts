@@ -36,3 +36,11 @@ export const sumDuplicateIds = (
 
   return Array.from(idMap.values());
 };
+
+export const sumTotal = (
+  array: { quantity: number; item: ItemProp }[]
+): number => {
+  return array.reduce((acc, obj) => {
+    return acc + parseFloat(obj?.item?.new_price) * obj?.quantity;
+  }, 0);
+};
