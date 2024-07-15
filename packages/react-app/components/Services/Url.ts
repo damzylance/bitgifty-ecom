@@ -1,13 +1,16 @@
-import { baseUrl } from "../Utils/Constants";
 import { capitalizeFirstLetter } from "../Utils/Helpers";
 
-export const getStoreUrl = () => `${baseUrl}/store`;
-export const getSuperCategoriesUrl = () => `${baseUrl}/supercategory`;
+export const getStoreUrl = () => `${process.env.NEXT_PUBLIC_BASE_URL}/store`;
+export const getSuperCategoriesUrl = () =>
+  `${process.env.NEXT_PUBLIC_BASE_URL}/supercategory`;
 export const getSuperCategoryByNameUrl = (
   category_name: string | string[] | undefined
-) => `${baseUrl}/supercategorybyname/${capitalizeFirstLetter(category_name)}`;
+) =>
+  `${
+    process.env.NEXT_PUBLIC_BASE_URL
+  }/supercategorybyname/${capitalizeFirstLetter(category_name)}`;
 export const getStoreByIdUrl = (store_id: string | string[] | undefined) =>
-  `${baseUrl}/store/${store_id}`;
+  `${process.env.NEXT_PUBLIC_BASE_URL}/store/${store_id}`;
 
 export const getItemByIdUrl = (item_id: string | string[] | undefined) =>
-  `${baseUrl}/items/${item_id}`;
+  `${process.env.NEXT_PUBLIC_BASE_URL}/items/${item_id}`;
