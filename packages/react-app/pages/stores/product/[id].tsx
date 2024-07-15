@@ -80,7 +80,7 @@ const Page = () => {
                 ? Array(5).fill(<StarIcon />)
                 : Array(item?.star).fill(<StarIcon />)}
             </div>
-            <span>{`${item?.star}.0`}</span>
+            <span>{getItemByIdQuery.isFetching ? "" : `${item?.star}.0`}</span>
           </div>
           <section className="mt-[37px] flex items-center justify-between">
             <div className="flex items-center gap-x-[25px]">
