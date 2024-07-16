@@ -61,7 +61,7 @@ const Page = () => {
           <FormButtonDashboard text="Sign In" extraClass="mt-[48px]" />
         </form>
         <p className="mt-[35px] font-inter font-[500] text-[0.875rem] text-center">
-          Don't have an account?{" "}
+          {"Don't have an account? "}
           <Link href={"/vendor/sign-up"} className="text-[#103D96]">
             sign up
           </Link>
