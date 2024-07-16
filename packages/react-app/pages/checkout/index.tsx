@@ -43,8 +43,8 @@ const Page = () => {
             </p>
           </div>
           <section className="mt-[20px] px-[16px] flex flex-col gap-y-[19px]">
-            {state.cart?.map((product) => (
-              <CartCard
+            {state.cart?.map((product,id) => (
+              <CartCard key={id}
                 title={product?.item?.title}
                 desc={product?.item?.desc}
                 thumbnail={product?.item?.thumbnail}
