@@ -1,0 +1,28 @@
+get store                                           {good}
+get store/ Id                                       {good}
+get store/ user                                     {good}
+post store -d [category[items]]                     {good}
+put store/ Id 
+
+get supercatergory
+get supercategory/ Id
+post supercategory -d [store[category[items]]]
+put supercategory/ Id
+
+get order
+get order/ Id
+get order-store
+post order
+post fulfil-order -d [store-owner, id]
+
+get items                                           {good}
+get items/ Id                                       {good}
+get items/ location                                 {good}
+get items/ category                                 {good}
+get items/ category/ location
+get items/ supercategory
+post items                                          {good}
+
+get category                                        {good}
+get category/ store
+post category  -d [items]
