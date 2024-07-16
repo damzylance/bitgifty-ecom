@@ -29,7 +29,7 @@ const Page = () => {
       </div>
       {state?.cart?.length === 0 ? (
         <p className="text-[0.75rem] text-black-2 text-center leading-[14.06px]">
-          There's nothing in the cart at the moment
+          {`There's nothing in the cart at the moment`}
         </p>
       ) : (
         <>
