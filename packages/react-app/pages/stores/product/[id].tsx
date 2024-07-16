@@ -36,7 +36,7 @@ const Page = () => {
     quantity: number;
     item: ItemProp;
   }) => {
-    if (quantity < 2) {
+    if (quantity < 1) {
       return;
     }
     dispatch({ type: "ADD_TO_CART", payload: { quantity, item } });
@@ -56,21 +56,31 @@ const Page = () => {
             />
             <CartIcon extraClass="bg-blue-2" />
           </div>
-          <img
-            src={item?.display_photo}
-            alt=""
-            className="h-[248px] w-[248px] rounded-[50%] m-[0_auto]"
-          />
+          {getItemByIdQuery.isFetching ? (
+            <div className="h-[248px] w-[248px] rounded-[50%] m-[0_auto] bg-grey-4 animate-pulse"></div>
+          ) : (
+            <img
+              src={item?.display_photo}
+              alt=""
+              className="h-[248px] w-[248px] rounded-[50%] m-[0_auto]"
+            />
+          )}
         </div>
         <section className="bg-white w-full min-h-[calc(100vh-380px)] rounded-[32px_32px_0px_0px] shadow-md absolute top-[380px] px-[23px] pt-[33px] pb-[72px]">
-          <p className="text-[1.125rem] text-black-1 leading-[21.09px] font-[500] max-w-[245px]">
-            {item?.menu}
-          </p>
+          {getItemByIdQuery.isFetching ? (
+            <p className=" bg-black-2 h-[12px] w-[200px] rounded-[8px] ani"></p>
+          ) : (
+            <p className="text-[1.125rem] text-black-1 leading-[21.09px] font-[500] max-w-[245px]">
+              {item?.menu}
+            </p>
+          )}
           <div className="mt-[14px] flex items-center gap-x-[15px]">
             <div className="flex items-center gap-x-[8px]">
-              {Array(item?.star).fill(<StarIcon />)}
+              {getItemByIdQuery.isFetching
+                ? Array(5).fill(<StarIcon />)
+                : Array(item?.star).fill(<StarIcon />)}
             </div>
-            <span>{`${item?.star}.0`}</span>
+            <span>{getItemByIdQuery.isFetching ? "" : `${item?.star}.0`}</span>
           </div>
           <section className="mt-[37px] flex items-center justify-between">
             <div className="flex items-center gap-x-[25px]">
@@ -82,22 +92,39 @@ const Page = () => {
               <span>{itemCount}</span>
               <PlusIcon onClick={() => setItemCount((prev) => prev + 1)} />
             </div>
-            <div className="flex flex-col gap-y-[2px]">
-              <p className="text-[1.5rem] text-blue-1 leading-[28.13px] font-[900]">
-                {item?.new_price}
-              </p>
-              <p className="text-[0.875rem] text-grey-3 leading-[16.41px] line-through">
-                {item?.old_price}
-              </p>
-            </div>
+            {getItemByIdQuery.isFetching ? (
+              <div className="flex flex-col gap-y-[2px] animate-pulse">
+                <p className=" bg-blue-1 w-[56px] h-[20px] rounded-[8px] animate-pulse"></p>
+                <p className=" bg-black-2 w-[33px] h-[16px] rounded-[8px] animate-pulse"></p>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-y-[2px]">
+                <p className="text-[1.5rem] text-blue-1 leading-[28.13px] font-[900]">
+                  {item?.new_price}
+                </p>
+                <p className="text-[0.875rem] text-grey-3 leading-[16.41px] line-through">
+                  {item?.old_price}
+                </p>
+              </div>
+            )}
           </section>
+
           <section className="mt-[33px]">
             <h3 className="text-[1rem] text-black-1 leading-[18.75px] font-[500]">
               Description
             </h3>
-            <p className="mt-[11px] text-grey-3 text-[0.875rem] leading-[16.59px] font-[300]">
-              {item?.desc}
-            </p>
+            {getItemByIdQuery.isFetching ? (
+              <>
+                <p className="mt-[11px] bg-grey-3 h-[9px] w-[300px] rounded-[8px] animate-pulse"></p>
+                <p className="mt-[11px] bg-grey-3 h-[9px] w-[300px] rounded-[8px] animate-pulse"></p>
+
+                <p className="mt-[11px] bg-grey-3 h-[9px] w-[155px] rounded-[8px] animate-pulse"></p>
+              </>
+            ) : (
+              <p className="mt-[11px] text-grey-3 text-[0.875rem] leading-[16.59px] font-[300]">
+                {item?.desc}
+              </p>
+            )}
           </section>
           <ActionButton
             text={`Add ${itemCount} for ${

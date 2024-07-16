@@ -6,18 +6,16 @@ import Search from "@/components/Search";
 import Select from "@/components/Select";
 import { StoreCard } from "@/components/StoreCard";
 import { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
 import YMLStores from "@/components/YMLStores";
 import { useQuery } from "@tanstack/react-query";
 import { STORES_KEY, SUPER_CATEGORIES_KEY } from "@/components/Utils/Constants";
 import { getAllStores, getAllSuperCategories } from "@/components/Services/Api";
+import { ItemCardSkeleton } from "@/components/Skeletons/ItemCardSkeleton";
+import { StoreCardSkeleton } from "@/components/Skeletons/StoreCardSkeleton";
 
 export default function Home() {
-  const [userAddress, setUserAddress] = useState("");
-  const [isMounted, setIsMounted] = useState(false);
   const [showYMLStores, setShowYMLStores] = useState(false);
-  const { address, isConnected } = useAccount();
   const router = useRouter();
 
   const getAllStoresQuery = useQuery({
@@ -46,20 +44,6 @@ export default function Home() {
     }
   }, [showYMLStores]);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (isConnected && address) {
-      setUserAddress(address);
-    }
-  }, [address, isConnected]);
-
-  if (!isMounted) {
-    return null;
-  }
-
   return (
     <section className="max-w-full md:max-w-[393px] m-[0_auto] relative">
       <section className=" bg-shop-bg w-full h-[730px] bg-no-repeat bg-cover pt-[56px] px-[17px]">
@@ -70,14 +54,18 @@ export default function Home() {
         </div>
         <Select />
         <div className=" grid grid-cols-2 m-[0_auto] mt-[91px] w-fit gap-[28px]">
-          {supercategories?.map((item: any) => (
-            <ItemCard
-              key={item?.id}
-              img={item?.icon}
-              text={item?.name}
-              link={`${item?.name?.toLowerCase()}`}
-            />
-          ))}
+          {supercategories?.map((item: any) =>
+            getAllSupercategoriesQuery.isFetching ? (
+              <ItemCardSkeleton key={item?.id} />
+            ) : (
+              <ItemCard
+                key={item?.id}
+                img={item?.icon}
+                text={item?.name}
+                link={`${item?.name?.toLowerCase()}`}
+              />
+            )
+          )}
         </div>
       </section>
       <section className="px-[17px]">
@@ -97,17 +85,23 @@ export default function Home() {
             showYMLStores ? "translate-y-[-300px]" : "transform-none"
           }`}
         >
-          {stores?.slice(0, 2)?.map((store: any) => (
-            <StoreCard
-              key={store?.id}
-              cutoff={store?.cutoff}
-              item={store?.item}
-              desc={store?.desc}
-              rating={store?.rating}
-              thumbnail={store?.thumbnail}
-              onClick={() => router.push(`/stores/in/${store?.id}`)}
-            />
-          ))}
+          {stores
+            ?.slice(0, 2)
+            ?.map((store: any) =>
+              getAllStoresQuery.isFetching ? (
+                <StoreCardSkeleton key={store?.id} />
+              ) : (
+                <StoreCard
+                  key={store?.id}
+                  cutoff={store?.cutoff}
+                  item={store?.item}
+                  desc={store?.desc}
+                  rating={store?.rating}
+                  thumbnail={store?.thumbnail}
+                  onClick={() => router.push(`/stores/in/${store?.id}`)}
+                />
+              )
+            )}
         </div>
       </section>
 

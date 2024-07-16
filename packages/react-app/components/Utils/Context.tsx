@@ -12,7 +12,8 @@ type Action =
   | { type: "ADD_TO_CART"; payload: { item: ItemProp; quantity: number } }
   | { type: "REMOVE_FROM_CART"; payload: number }
   | { type: "INCREASE_ITEM"; payload: number }
-  | { type: "DECREASE_ITEM"; payload: number };
+  | { type: "DECREASE_ITEM"; payload: number }
+  | { type: "CLEAR_CART" };
 
 // Initial state
 const initialState: State = {
@@ -37,6 +38,8 @@ const reducer = (state: State, action: Action): State => {
 
     case "REMOVE_FROM_CART":
       return { ...state };
+    case "CLEAR_CART":
+      return { ...state, cart: [] };
     case "INCREASE_ITEM":
       const itemToIncreaseId = action.payload;
 
