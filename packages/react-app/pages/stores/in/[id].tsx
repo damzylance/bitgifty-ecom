@@ -174,7 +174,7 @@ const Page = () => {
         <section className="px-[16px]">
           {storeInfo?.category?.map((category: any) => {
             return (
-              <section className="mt-[32px]">
+              <section className="mt-[32px]" key={category.id}>
                 {getStoreByIdQuery.isFetching ? (
                   <CatTitleSkeleton key={category?.id} />
                 ) : (
