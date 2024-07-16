@@ -3,7 +3,7 @@ import Search from "@/components/Search";
 import { Map } from "@/components/map";
 import { useRouter } from "next/router";
 
-const index = () => {
+const AddLocation = () => {
   const router = useRouter();
   return (
     <section className="max-w-full md:max-w-[393px] m-[0_auto] relative">
@@ -22,4 +22,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default AddLocation;
