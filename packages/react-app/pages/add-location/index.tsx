@@ -14,7 +14,9 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 
+
 const Page = () => {
+
   const router = useRouter();
   const { dispatch } = useStateContext();
   const {

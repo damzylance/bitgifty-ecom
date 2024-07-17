@@ -51,7 +51,7 @@ const Page = () => {
       </div>
       {state?.cart?.length === 0 ? (
         <p className="mt-[10px] text-[0.75rem] text-black-2 text-center leading-[14.06px]">
-          There's nothing in the cart at the moment
+          {"There's nothing in the cart at the moment"}
         </p>
       ) : (
         <>
@@ -65,8 +65,8 @@ const Page = () => {
             </p>
           </div>
           <section className="mt-[20px] px-[16px] flex flex-col gap-y-[19px]">
-            {state.cart?.map((product) => (
-              <CartCard
+            {state.cart?.map((product,id) => (
+              <CartCard key={id}
                 title={product?.item?.title}
                 desc={product?.item?.desc}
                 thumbnail={product?.item?.thumbnail}
