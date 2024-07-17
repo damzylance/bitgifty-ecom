@@ -5,6 +5,7 @@ import { ItemProp } from "./Types";
 // Define the state shape
 interface State {
   cart: { item: ItemProp; quantity: number }[];
+  selected: any;
 }
 
 // Define action types
@@ -13,11 +14,13 @@ type Action =
   | { type: "REMOVE_FROM_CART"; payload: number }
   | { type: "INCREASE_ITEM"; payload: number }
   | { type: "DECREASE_ITEM"; payload: number }
-  | { type: "CLEAR_CART" };
+  | { type: "CLEAR_CART" }
+  | { type: "SET_SELECTED"; payload: any };
 
 // Initial state
 const initialState: State = {
   cart: [],
+  selected: null,
 };
 
 // Reducer function
@@ -69,6 +72,8 @@ const reducer = (state: State, action: Action): State => {
           return { ...state };
         }
       }
+    case "SET_SELECTED":
+      return { ...state, selected: action.payload };
 
     default:
       return state;
