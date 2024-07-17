@@ -1,43 +1,46 @@
 {
-    "name": "@bitgifty-shop/react-app",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
-        "lint": "next lint"
-    },
-    "dependencies": {
-        "@headlessui/react": "^1.7.14",
-        "@heroicons/react": "^2.0.18",
-        "@hookform/resolvers": "^3.6.0",
-        "@rainbow-me/rainbowkit": "^2.0.2",
-        "@tanstack/react-query": "^5.28.6",
-        "@types/google-map-react": "^2.1.10",
-        "@wagmi/connectors": "4.1.18",
-        "ethers": "^5.7.2",
-        "google-map-react": "^2.2.1",
-        "next": "^13.4.2",
-        "react": "18.2.0",
-        "react-dom": "18.2.0",
-        "react-hook-form": "^7.52.0",
-        "viem": "2.8.18",
-        "wagmi": "2.5.12",
-        "zod": "^3.23.8"
-    },
-    "devDependencies": {
-        "@types/node": "^20.2.1",
-        "@types/react": "^18.2.6",
-        "@types/react-dom": "^18.2.4",
-        "autoprefixer": "^10.4.14",
-        "eslint": "^8.40.0",
-        "eslint-config-next": "^13.4.2",
-        "postcss": "^8.4.23",
-        "tailwindcss": "^3.3.2",
-        "typescript": "^5.0.4"
-    },
-    "browser": {
-        "net": false
-    }
+  "name": "@bitgifty-shop/react-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.14",
+    "@heroicons/react": "^2.0.18",
+    "@hookform/resolvers": "^3.6.0",
+    "@rainbow-me/rainbowkit": "^2.0.2",
+    "@reach/combobox": "^0.18.0",
+    "@react-google-maps/api": "^2.19.3",
+    "@tanstack/react-query": "^5.28.6",
+    "@types/google-map-react": "^2.1.10",
+    "@wagmi/connectors": "4.1.18",
+    "ethers": "^5.7.2",
+    "next": "^13.4.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.52.0",
+    "use-places-autocomplete": "^4.0.1",
+    "viem": "2.8.18",
+    "wagmi": "2.5.12",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.1",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.40.0",
+    "eslint-config-next": "^13.4.2",
+    "postcss": "^8.4.23",
+    "tailwind-scrollbar": "^3.1.0",
+    "tailwindcss": "^3.3.2",
+    "typescript": "^5.0.4"
+  },
+  "browser": {
+    "net": false
+  }
 }
