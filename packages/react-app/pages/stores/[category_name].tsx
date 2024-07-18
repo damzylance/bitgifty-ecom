@@ -17,7 +17,7 @@ const Page = () => {
     queryKey: [`${SUPER_CATEGORY_BY_NAME_KEY}_${category_name}`],
     queryFn: () => getSuperCategoryByName(category_name),
   });
-  const store = getCategoryByNameQuery?.data?.store;
+  const stores = getCategoryByNameQuery?.data?.store;
   const categories = getCategoryByNameQuery?.data?.store[0]?.category;
 
   return (
@@ -55,7 +55,7 @@ const Page = () => {
           )}
         </section>
         <section className="w-full mt-[38px] grid grid-cols-1 gap-y-[21px] pb-[56px]">
-          {store?.map((store: any) =>
+          {stores?.map((store: any) =>
             !getCategoryByNameQuery.data ? (
               <StoreCardSkeleton key={store?.id} />
             ) : (
