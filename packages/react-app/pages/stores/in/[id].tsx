@@ -28,7 +28,6 @@ const Page = () => {
   const router = useRouter();
   const { id } = router.query;
   const { dispatch } = useStateContext();
-  // const storeInfo = StoreData?.find((store) => store?.id?.toString() === id);
   const [activeCategory, setActiveCategory] = useState("");
 
   const [isVisible, setIsVisible] = useState(true);
@@ -86,14 +85,14 @@ const Page = () => {
           <section className="mt-[19px]">
             <div
               className={`w-full h-[130px] bg-no-repeat bg-cover relative ${
-                getStoreByIdQuery.isFetching && "animate-pulse"
+                !getStoreByIdQuery.data && "animate-pulse"
               }`}
               style={{
                 backgroundImage: `url(${storeInfo?.banner})`,
                 backgroundColor: "#E8E9EE",
               }}
             >
-              {getStoreByIdQuery.isFetching ? (
+              {!getStoreByIdQuery.data ? (
                 <div className="absolute left-[16px] bottom-[-65px] h-[100px] w-[100px] rounded-[8px] bg-grey-1"></div>
               ) : (
                 <img
@@ -104,7 +103,7 @@ const Page = () => {
               )}
             </div>
 
-            {getStoreByIdQuery.isFetching ? (
+            {!getStoreByIdQuery.data ? (
               <div className="w-fit m-[0_auto] mt-[7px] animate-pulse">
                 <p className="h-[9px] w-[100px] mb-[10px] bg-black-2 rounded-[8px] animate-pulse"></p>
                 <div className="w-[123px] h-[19px] p-[3px_9px] bg-brown-1 animate-pulse"></div>
@@ -174,8 +173,8 @@ const Page = () => {
         <section className="px-[16px]">
           {storeInfo?.category?.map((category: any) => {
             return (
-              <section className="mt-[32px]" key={category.id}>
-                {getStoreByIdQuery.isFetching ? (
+              <section className="mt-[32px]">
+                {!getStoreByIdQuery.data ? (
                   <CatTitleSkeleton key={category?.id} />
                 ) : (
                   <CatTitle
@@ -187,7 +186,7 @@ const Page = () => {
                 {storeInfo?.item?.toLowerCase()?.includes("drink") ? (
                   <div className="w-full mt-[23px] grid grid-cols-3 gap-[16px] pb-[56px]">
                     {category?.items?.map((item: ItemProp) =>
-                      getStoreByIdQuery.isFetching ? (
+                      !getStoreByIdQuery.data ? (
                         <DInStoreCardSkeleton key={item?.id} />
                       ) : (
                         <DInStoreCard
@@ -204,7 +203,7 @@ const Page = () => {
                 ) : (
                   <div className="mt-[33px] flex flex-col gap-y-[16px]">
                     {category?.items?.map((item: ItemProp) =>
-                      getStoreByIdQuery.isFetching ? (
+                      !getStoreByIdQuery.data ? (
                         <InStoreCardSkeleton key={item?.id} />
                       ) : (
                         <InStoreCard

@@ -56,7 +56,7 @@ const Page = () => {
             />
             <CartIcon extraClass="bg-blue-2" />
           </div>
-          {getItemByIdQuery.isFetching ? (
+          {!getItemByIdQuery.data ? (
             <div className="h-[248px] w-[248px] rounded-[50%] m-[0_auto] bg-grey-4 animate-pulse"></div>
           ) : (
             <img
@@ -67,7 +67,7 @@ const Page = () => {
           )}
         </div>
         <section className="bg-white w-full min-h-[calc(100vh-380px)] rounded-[32px_32px_0px_0px] shadow-md absolute top-[380px] px-[23px] pt-[33px] pb-[72px]">
-          {getItemByIdQuery.isFetching ? (
+          {!getItemByIdQuery.data ? (
             <p className=" bg-black-2 h-[12px] w-[200px] rounded-[8px] ani"></p>
           ) : (
             <p className="text-[1.125rem] text-black-1 leading-[21.09px] font-[500] max-w-[245px]">
@@ -76,11 +76,11 @@ const Page = () => {
           )}
           <div className="mt-[14px] flex items-center gap-x-[15px]">
             <div className="flex items-center gap-x-[8px]">
-              {getItemByIdQuery.isFetching
+              {!getItemByIdQuery.data
                 ? Array(5).fill(<StarIcon />)
                 : Array(item?.star).fill(<StarIcon />)}
             </div>
-            <span>{getItemByIdQuery.isFetching ? "" : `${item?.star}.0`}</span>
+            <span>{!getItemByIdQuery.data ? "" : `${item?.star}.0`}</span>
           </div>
           <section className="mt-[37px] flex items-center justify-between">
             <div className="flex items-center gap-x-[25px]">
@@ -92,7 +92,7 @@ const Page = () => {
               <span>{itemCount}</span>
               <PlusIcon onClick={() => setItemCount((prev) => prev + 1)} />
             </div>
-            {getItemByIdQuery.isFetching ? (
+            {!getItemByIdQuery.data ? (
               <div className="flex flex-col gap-y-[2px] animate-pulse">
                 <p className=" bg-blue-1 w-[56px] h-[20px] rounded-[8px] animate-pulse"></p>
                 <p className=" bg-black-2 w-[33px] h-[16px] rounded-[8px] animate-pulse"></p>
@@ -113,7 +113,7 @@ const Page = () => {
             <h3 className="text-[1rem] text-black-1 leading-[18.75px] font-[500]">
               Description
             </h3>
-            {getItemByIdQuery.isFetching ? (
+            {!getItemByIdQuery.data ? (
               <>
                 <p className="mt-[11px] bg-grey-3 h-[9px] w-[300px] rounded-[8px] animate-pulse"></p>
                 <p className="mt-[11px] bg-grey-3 h-[9px] w-[300px] rounded-[8px] animate-pulse"></p>

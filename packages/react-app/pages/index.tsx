@@ -55,7 +55,7 @@ export default function Home() {
         <Select />
         <div className=" grid grid-cols-2 m-[0_auto] mt-[91px] w-fit gap-[28px]">
           {supercategories?.map((item: any) =>
-            getAllSupercategoriesQuery.isFetching ? (
+            !getAllSupercategoriesQuery.data ? (
               <ItemCardSkeleton key={item?.id} />
             ) : (
               <ItemCard
@@ -88,7 +88,7 @@ export default function Home() {
           {stores
             ?.slice(0, 2)
             ?.map((store: any) =>
-              getAllStoresQuery.isFetching ? (
+              !getAllStoresQuery.data ? (
                 <StoreCardSkeleton key={store?.id} />
               ) : (
                 <StoreCard

@@ -42,7 +42,7 @@ const Page = () => {
 
         <section className="py-[24px] flex items-center gap-x-[16px] w-[361px] overflow-x-auto no-scrollbar">
           {categories?.map((category: any) =>
-            getCategoryByNameQuery.isFetching ? (
+            !getCategoryByNameQuery.data ? (
               <CatCardSkeleton key={category?.id} />
             ) : (
               <CatCard
@@ -56,7 +56,7 @@ const Page = () => {
         </section>
         <section className="w-full mt-[38px] grid grid-cols-1 gap-y-[21px] pb-[56px]">
           {store?.map((store: any) =>
-            getCategoryByNameQuery.isFetching ? (
+            !getCategoryByNameQuery.data ? (
               <StoreCardSkeleton key={store?.id} />
             ) : (
               <StoreCard

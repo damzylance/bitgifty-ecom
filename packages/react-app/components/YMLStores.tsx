@@ -46,7 +46,7 @@ const YMLStores = ({
       <section className="px-[17px]">
         <div className="w-full mt-[23px] grid grid-cols-2 gap-[16px] pb-[56px]">
           {stores?.map((store: any) =>
-            getAllStoresQuery.isFetching ? (
+            !getAllStoresQuery.data ? (
               <StoreCardSkeleton key={store?.id} />
             ) : (
               <StoreCard

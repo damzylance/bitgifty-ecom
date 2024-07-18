@@ -32,7 +32,6 @@ const Page = () => {
     const results = await getGeocode({ address });
     const { lat, lng } = getLatLng(results[0]);
     dispatch({ type: "SET_SELECTED", payload: { lat, lng } });
-    console.log(results);
   };
   return (
     <section className="max-w-full md:max-w-[393px] m-[0_auto] relative">
