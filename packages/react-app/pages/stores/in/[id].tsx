@@ -183,7 +183,6 @@ const Page = () => {
                     text={category?.name}
                   />
                 )}
-
                 {storeInfo?.item?.toLowerCase()?.includes("drink") ? (
                   <div className="w-full mt-[23px] grid grid-cols-3 gap-[16px] pb-[56px]">
                     {category?.items?.map((item: ItemProp) =>
