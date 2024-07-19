@@ -53,20 +53,23 @@ export default function Home() {
           <CartIcon extraClass="bg-grey-2" />
         </div>
         <Select />
-        <div className=" grid grid-cols-2 m-[0_auto] mt-[91px] w-fit gap-[28px]">
-          {supercategories?.map((item: any) =>
-            !getAllSupercategoriesQuery.data ? (
-              <ItemCardSkeleton key={item?.id} />
-            ) : (
+
+        {supercategories ? (
+          <div className=" grid grid-cols-2 m-[0_auto] mt-[91px] w-fit gap-[28px]">
+            {supercategories?.map((item: any) => (
               <ItemCard
                 key={item?.id}
                 img={item?.icon}
                 text={item?.name}
                 link={`${item?.name?.toLowerCase()}`}
               />
-            )
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className=" grid grid-cols-2 m-[0_auto] mt-[91px] w-fit gap-[28px]">
+            {Array(4).fill(<ItemCardSkeleton />)}
+          </div>
+        )}
       </section>
       <section className="px-[17px]">
         <div className="flex items-center justify-between">
@@ -80,29 +83,33 @@ export default function Home() {
             extraClass="bg-grey-2"
           />
         </div>
-        <div
-          className={`w-full mt-[23px] grid grid-cols-2 gap-[16px] pb-[56px] transition-transform duration-300 ease-in-out ${
-            showYMLStores ? "translate-y-[-300px]" : "transform-none"
-          }`}
-        >
-          {stores
-            ?.slice(0, 2)
-            ?.map((store: any) =>
-              !getAllStoresQuery.data ? (
-                <StoreCardSkeleton key={store?.id} />
-              ) : (
-                <StoreCard
-                  key={store?.id}
-                  cutoff={store?.cutoff}
-                  item={store?.item}
-                  desc={store?.desc}
-                  rating={store?.rating}
-                  thumbnail={store?.thumbnail}
-                  onClick={() => router.push(`/stores/in/${store?.id}`)}
-                />
-              )
-            )}
-        </div>
+        {stores ? (
+          <div
+            className={`w-full mt-[23px] grid grid-cols-2 gap-[16px] pb-[56px] transition-transform duration-300 ease-in-out ${
+              showYMLStores ? "translate-y-[-300px]" : "transform-none"
+            }`}
+          >
+            {stores?.slice(0, 2)?.map((store: any) => (
+              <StoreCard
+                key={store?.id}
+                cutoff={store?.cutoff}
+                item={store?.item}
+                desc={store?.desc}
+                rating={store?.rating}
+                thumbnail={store?.thumbnail}
+                onClick={() => router.push(`/stores/in/${store?.id}`)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div
+            className={`w-full mt-[23px] grid grid-cols-2 gap-[16px] pb-[56px] transition-transform duration-300 ease-in-out ${
+              showYMLStores ? "translate-y-[-300px]" : "transform-none"
+            }`}
+          >
+            {Array(2).fill(<StoreCardSkeleton />)}
+          </div>
+        )}
       </section>
 
       <YMLStores show={showYMLStores} setShow={setShowYMLStores} />

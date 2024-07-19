@@ -13,7 +13,6 @@ import { InStoreCard } from "@/components/InStoreCard";
 import Search from "@/components/Search";
 import { getStoreById } from "@/components/Services/Api";
 import { CatTitleSkeleton } from "@/components/Skeletons/CatTitleSkeleton";
-import { DInStoreCardSkeleton } from "@/components/Skeletons/DInStoreSkeleton";
 import { InStoreCardSkeleton } from "@/components/Skeletons/InStoreCardSkeleton";
 import { StoreCatCard } from "@/components/StoreCatCard";
 import { STORE_BY_ID_KEY } from "@/components/Utils/Constants";
@@ -85,14 +84,14 @@ const Page = () => {
           <section className="mt-[19px]">
             <div
               className={`w-full h-[130px] bg-no-repeat bg-cover relative ${
-                !getStoreByIdQuery.data && "animate-pulse"
+                !storeInfo && "animate-pulse"
               }`}
               style={{
                 backgroundImage: `url(${storeInfo?.banner})`,
                 backgroundColor: "#E8E9EE",
               }}
             >
-              {!getStoreByIdQuery.data ? (
+              {!storeInfo ? (
                 <div className="absolute left-[16px] bottom-[-65px] h-[100px] w-[100px] rounded-[8px] bg-grey-1"></div>
               ) : (
                 <img
@@ -103,7 +102,7 @@ const Page = () => {
               )}
             </div>
 
-            {!getStoreByIdQuery.data ? (
+            {!storeInfo ? (
               <div className="w-fit m-[0_auto] mt-[7px] animate-pulse">
                 <p className="h-[9px] w-[100px] mb-[10px] bg-black-2 rounded-[8px] animate-pulse"></p>
                 <div className="w-[123px] h-[19px] p-[3px_9px] bg-brown-1 animate-pulse"></div>
@@ -170,25 +169,21 @@ const Page = () => {
             ))}
           </section>
         </section>
-        <section className="px-[16px]">
-          {storeInfo?.category?.map((category: any) => {
-            return (
-              <section className="mt-[32px]" key={category?.id}>
-                {!getStoreByIdQuery.data ? (
-                  <CatTitleSkeleton key={category?.id} />
-                ) : (
-                  <CatTitle
-                    key={category?.id}
-                    icon={category?.icon}
-                    text={category?.name}
-                  />
-                )}
-                {storeInfo?.item?.toLowerCase()?.includes("drink") ? (
-                  <div className="w-full mt-[23px] grid grid-cols-3 gap-[16px] pb-[56px]">
-                    {category?.items?.map((item: ItemProp) =>
-                      !getStoreByIdQuery.data ? (
-                        <DInStoreCardSkeleton key={item?.id} />
-                      ) : (
+        {storeInfo ? (
+          <section className="px-[16px]">
+            {storeInfo?.category?.map((category: any) => {
+              return (
+                <section className="mt-[32px]" key={category?.id}>
+                  {
+                    <CatTitle
+                      key={category?.id}
+                      icon={category?.icon}
+                      text={category?.name}
+                    />
+                  }
+                  {storeInfo?.item?.toLowerCase()?.includes("drink") ? (
+                    <div className="w-full mt-[23px] grid grid-cols-3 gap-[16px] pb-[56px]">
+                      {category?.items?.map((item: ItemProp) => (
                         <DInStoreCard
                           key={item?.id}
                           name={item?.title}
@@ -197,15 +192,11 @@ const Page = () => {
                             router.push(`/stores/product/${item?.id}`)
                           }
                         />
-                      )
-                    )}
-                  </div>
-                ) : (
-                  <div className="mt-[33px] flex flex-col gap-y-[16px]">
-                    {category?.items?.map((item: ItemProp) =>
-                      !getStoreByIdQuery.data ? (
-                        <InStoreCardSkeleton key={item?.id} />
-                      ) : (
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="mt-[33px] flex flex-col gap-y-[16px]">
+                      {category?.items?.map((item: ItemProp) => (
                         <InStoreCard
                           key={item?.id}
                           cutoff={item?.cutoff}
@@ -225,14 +216,24 @@ const Page = () => {
                             });
                           }}
                         />
-                      )
-                    )}
-                  </div>
-                )}
-              </section>
-            );
-          })}
-        </section>
+                      ))}
+                    </div>
+                  )}
+                </section>
+              );
+            })}
+          </section>
+        ) : (
+          <section className="px-[16px]">
+            <section className="mt-[32px]">
+              <CatTitleSkeleton />
+
+              <div className="mt-[33px] flex flex-col gap-y-[16px]">
+                {Array(4).fill(<InStoreCardSkeleton />)}
+              </div>
+            </section>
+          </section>
+        )}
       </section>
     </>
   );
