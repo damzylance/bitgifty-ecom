@@ -40,25 +40,25 @@ const Page = () => {
           <FilterIcon onClick={() => {}} extraClass="bg-grey-4" />
         </div>
 
-        <section className="py-[24px] flex items-center gap-x-[16px] w-[361px] overflow-x-auto no-scrollbar">
-          {categories?.map((category: any) =>
-            !getCategoryByNameQuery.data ? (
-              <CatCardSkeleton key={category?.id} />
-            ) : (
+        {categories ? (
+          <section className="py-[24px] flex items-center gap-x-[16px] w-[361px] overflow-x-auto no-scrollbar">
+            {categories?.map((category: any) => (
               <CatCard
                 key={category?.id}
                 name={category?.name}
                 icon={category?.icon}
                 onClick={() => {}}
               />
-            )
-          )}
-        </section>
-        <section className="w-full mt-[38px] grid grid-cols-1 gap-y-[21px] pb-[56px]">
-          {stores?.map((store: any) =>
-            !getCategoryByNameQuery.data ? (
-              <StoreCardSkeleton key={store?.id} />
-            ) : (
+            ))}
+          </section>
+        ) : (
+          <section className="py-[24px] flex items-center gap-x-[16px] w-[361px] overflow-x-auto no-scrollbar">
+            {Array(3).fill(<CatCardSkeleton />)}
+          </section>
+        )}
+        {stores ? (
+          <section className="w-full mt-[38px] grid grid-cols-1 gap-y-[21px] pb-[56px]">
+            {stores?.map((store: any) => (
               <StoreCard
                 key={store?.id}
                 cutoff={`${store?.cutoff} off some items`}
@@ -68,9 +68,13 @@ const Page = () => {
                 thumbnail={store?.thumbnail}
                 onClick={() => router.push(`/stores/in/${store?.id}`)}
               />
-            )
-          )}
-        </section>
+            ))}
+          </section>
+        ) : (
+          <section className="w-full mt-[38px] grid grid-cols-1 gap-y-[21px] pb-[56px]">
+            {Array(3).fill(<StoreCardSkeleton />)}
+          </section>
+        )}
       </section>
     </section>
   );

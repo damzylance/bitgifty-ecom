@@ -44,11 +44,9 @@ const YMLStores = ({
         </div>
       </section>
       <section className="px-[17px]">
-        <div className="w-full mt-[23px] grid grid-cols-2 gap-[16px] pb-[56px]">
-          {stores?.map((store: any) =>
-            !getAllStoresQuery.data ? (
-              <StoreCardSkeleton key={store?.id} />
-            ) : (
+        {stores ? (
+          <div className="w-full mt-[23px] grid grid-cols-2 gap-[16px] pb-[56px]">
+            {stores?.map((store: any) => (
               <StoreCard
                 key={store?.id}
                 cutoff={store?.cutoff}
@@ -58,9 +56,13 @@ const YMLStores = ({
                 thumbnail={store?.thumbnail}
                 onClick={() => router.push(`/stores/in/${store?.id}`)}
               />
-            )
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="w-full mt-[23px] grid grid-cols-2 gap-[16px] pb-[56px]">
+            {Array(4).fill(<StoreCardSkeleton />)}
+          </div>
+        )}
       </section>
     </section>
   );
