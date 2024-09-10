@@ -60,13 +60,11 @@ const Page = () => {
             <h2 className="text-[1.125rem] text-black font-[500] leading-[21.09px] ">
               Your Order
             </h2>
-            <p className="text-[0.75rem] text-black-2 leading-[14.06px]">
-              Lorem ipsum is a dummy text
-            </p>
           </div>
           <section className="mt-[20px] px-[16px] flex flex-col gap-y-[19px]">
-            {state.cart?.map((product,id) => (
-              <CartCard key={id}
+            {state.cart?.map((product, id) => (
+              <CartCard
+                key={id}
                 title={product?.item?.title}
                 desc={product?.item?.desc}
                 thumbnail={product?.item?.thumbnail}
@@ -102,13 +100,13 @@ const Page = () => {
             <OptionsCard
               icon={<LocationSmallIcon />}
               text="Ikorodu Garage"
-              subText="Lorem ipsum is a dummy text"
+              subText="Delivery location"
               onClick={() => {}}
             />
             <OptionsCard
               icon={<GiftIcon />}
               text="Sending to someone else"
-              subText="Lorem ipsum is a dummy text"
+              subText="Add delivery details"
               onClick={() => {}}
             />
             <div className="w-full mt-[9px] h-[53px] rounded-[8px] border-[#5C4356] border-[2px] bg-[#EAE1E8] flex flex-col justify-center gap-y-[4px] p-[9px_19px]">
@@ -174,7 +172,11 @@ const Page = () => {
               onClick={handleCheckOut}
               extraClass="mt-[43px]"
             />
-            {userAddress && <span>Wallet Address: {userAddress}</span>}
+            {userAddress && (
+              <span className=" break-words">
+                Wallet Address: {userAddress}
+              </span>
+            )}
           </div>
         </>
       )}
