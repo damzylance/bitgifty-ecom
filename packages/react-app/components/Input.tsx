@@ -31,7 +31,7 @@ export const Input = ({
             <p className="text-[0.875rem] text-[#404040] font-[500] font-inter">
               {label}
             </p>
-            <div className="w-full h-[48px] rounded-[8px] bg-white  border-[2px_solid_#333333] shadow-sm flex items-center gap-x-[5px] pr-[24px]">
+            <div className="w-full h-[48px] rounded-[8px] bg-white  border-[#333333] border-[2px] border-opacity-10 shadow-sm flex items-center gap-x-[5px] pr-[24px]">
               <input
                 value={value}
                 onChange={onChange}

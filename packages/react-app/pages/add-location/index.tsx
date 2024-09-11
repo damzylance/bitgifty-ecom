@@ -14,9 +14,7 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 
-
 const Page = () => {
-
   const router = useRouter();
   const { dispatch } = useStateContext();
   const {
@@ -42,7 +40,7 @@ const Page = () => {
       />
       <div className="h-[195px] w-full bg-white rounded-[16px_16px_0px_0px] shadow-sm absolute bottom-[-180px] flex flex-col items-center justify-center gap-y-[31px] px-[20px] z-10">
         <p className="text-black text-center max-w-[222px] text-[0.875rem] leading-[16.41px]">
-          Lorem Ipsum is a dummy text and a very dummy text
+          Select delivery location
         </p>
         <Combobox
           onSelect={handleSelect}
